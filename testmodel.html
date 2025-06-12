@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wallet Modal Example</title>
+    <!-- No need to add styles here, JS will inject them -->
+</head>
+<body>
+    <h2>Demo: Connect Your Wallet</h2>
+    <button id="connectWalletBtn">Connect Wallet</button>
+    <button class="wallet-btn">Connect Wallet (Alt)</button>
+
+    <!-- Link to your modal JS file -->
+    <script src="wallet.js"></script>
+    <script>
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create the modal instance
+            const walletModal = new WalletModal();
+
+            // Map to a single button by ID
+            document.getElementById('connectWalletBtn').onclick = function() {
+                walletModal.show();
+            };
+
+            // Map to all buttons with class 'wallet-btn'
+            document.querySelectorAll('.wallet-btn').forEach(btn => {
+                btn.onclick = () => walletModal.show();
+            });
+        });
+    </script>
+</body>
+</html>
